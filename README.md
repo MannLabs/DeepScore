@@ -3,7 +3,7 @@ The DeepScore Repository for the EuBIC 2023 Hackathon
 
 ## Scrum
 
-![](image.png)
+![](scrum.jpg)
 (This image was taken from https://www.pm-partners.com.au/the-agile-journey-a-scrum-overview/)
 
 - Monday: Sprint Planning Meeting: We define a Story Map on what we want to do -> Product / Sprint Backlog. 
