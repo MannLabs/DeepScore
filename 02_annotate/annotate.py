@@ -10,8 +10,8 @@ from copy import deepcopy
 
 #st.set_page_config(layout="wide")
 
-RAW_FILE = './60SPD_py8/20200428_Evosep_60SPD_SG06-16_MLHeLa_200ng_py8_S3-A4_1_2450.d'
-RESULTS_PATH = './fdr_005/report.tsv'
+RAW_FILE = '20200428_Evosep_60SPD_SG06-16_MLHeLa_200ng_py8_S3-A4_1_2450.d'
+RESULTS_PATH = 'report.tsv'
 from io import BytesIO
 
 BUFFER_SIZE = 100
@@ -76,7 +76,6 @@ def add_to_buffer():
 
     if len(st.session_state['buffer']) < BUFFER_SIZE:
         i = random.sample(range(len(st.session_state['raw_data'].ref_filtered)), 1)[0]
-
         b1 = lineplot(st.session_state['raw_data'], i)
         b2 = imgplot(st.session_state['raw_data'], i)
 
