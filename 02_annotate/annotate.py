@@ -5,8 +5,9 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import datetime
 import yaml
-
+from utils_s3 import Session3bucket
 from copy import deepcopy
+#import SessionState
 
 #st.set_page_config(layout="wide")
 
@@ -137,6 +138,8 @@ if username == '':
     st.error('Please enter username in the sidebar.')
     st.stop()
 
+#session_state = SessionState.get(random_number=random.random())
+s3connection = Session3bucket(session_state_id=username)
 
 with st.form('Peptide Checker', clear_on_submit=True):
     sample, b1, b2 = extract_from_buffer()
@@ -153,6 +156,8 @@ with st.form('Peptide Checker', clear_on_submit=True):
         base_entry = f'{datetime.datetime.now().isoformat()}\t {username} \t {sample}'
         entry = base_entry + f'\t {confidence}\n'
         st.success(entry)
+
+        s3connection.write_to_file(entry=entry)
 
         write_entry(st.session_state['out_file'], entry)
 
