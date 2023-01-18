@@ -127,3 +127,13 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# files for testing 02_annotate
+20200428_Evosep_60SPD_SG06-16_MLHeLa_200ng_py8_S3-A4_1_2450.d
+report.tsv
+
+# streamlit app secrets
+.streamlit
+
+.DS_store

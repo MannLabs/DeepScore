@@ -14,6 +14,7 @@ import alphatims.bruker
 import os
 import alphabase
 
+import streamlit as st
 
 from alphabase.io.psm_reader.psm_reader import (
     psm_reader_provider, psm_reader_yaml
@@ -55,8 +56,6 @@ class RawResults():
         self.read_results_file()
         self.create_fragments()
         self.filter_results()
-
-
 
     def read_raw_file(self):
         self.dia_data = alphatims.bruker.TimsTOF(self.raw_file)
@@ -121,7 +120,7 @@ class RawResults():
         precursor_df['type'] = 'prec'
         raw_data.append(precursor_df)
 
-        start, end = peptide['frag_start_idx'], peptide['frag_end_idx']
+        start, end = peptide['frag_start_idx'], peptide['frag_stop_idx']
 
         fragments = self.fragment_mz_df.iloc[start:end]
 
@@ -219,4 +218,8 @@ class RawResults():
 
         
 
+
+def create_user():
+    # check if user is there
+    pass
 
