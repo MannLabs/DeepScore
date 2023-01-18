@@ -1,1 +1,3 @@
 alphabase==1.0.0
+alphatims
+streamlit

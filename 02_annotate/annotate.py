@@ -5,14 +5,12 @@ import matplotlib.pyplot as plt
 import numpy as np 
 import datetime
 import yaml
-from utils_s3 import Session3bucket
 from copy import deepcopy
-#import SessionState
 
 #st.set_page_config(layout="wide")
 
-RAW_FILE = '20200428_Evosep_60SPD_SG06-16_MLHeLa_200ng_py8_S3-A4_1_2450.d'
-RESULTS_PATH = 'report.tsv'
+RAW_FILE = 'data/20200428_Evosep_60SPD_SG06-16_MLHeLa_200ng_py8_S3-A4_1_2450.d'
+RESULTS_PATH = 'data/report.tsv'
 from io import BytesIO
 
 BUFFER_SIZE = 100
@@ -95,12 +93,6 @@ def file_loader(RAW_FILE, RESULTS_PATH):
     return RawResults(RAW_FILE, RESULTS_PATH)
 
 
-if 'out_file' not in st.session_state:
-
-    now = datetime.datetime.now().date()
-    st.session_state['out_file'] = f"{now}_session.txt"
-    st.session_state['out_file_yaml'] = f"{now}_session.yaml"
-
 if 'raw_data' not in st.session_state:
 
     st.session_state['raw_data']  = True #To block in case it is loading.
@@ -133,13 +125,17 @@ if 'buffer' not in st.session_state:
 
 
 username = st.sidebar.text_input('User','')
+st.session_state["username"]  = username
 
 if username == '':
     st.error('Please enter username in the sidebar.')
     st.stop()
 
-#session_state = SessionState.get(random_number=random.random())
-s3connection = Session3bucket(session_state_id=username)
+if 'out_file' not in st.session_state and "username" in st.session_state:
+
+    now = datetime.datetime.now().date()
+    st.session_state['out_file'] = f"annotation_results/{st.session_state.username}_{now}_session.txt"
+    st.session_state['out_file_yaml'] = f"annotation_results/{st.session_state.username}_{now}_session.yaml"
 
 with st.form('Peptide Checker', clear_on_submit=True):
     sample, b1, b2 = extract_from_buffer()
@@ -156,8 +152,6 @@ with st.form('Peptide Checker', clear_on_submit=True):
         base_entry = f'{datetime.datetime.now().isoformat()}\t {username} \t {sample}'
         entry = base_entry + f'\t {confidence}\n'
         st.success(entry)
-
-        s3connection.write_to_file(entry=entry)
 
         write_entry(st.session_state['out_file'], entry)
 
